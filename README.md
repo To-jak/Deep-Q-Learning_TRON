@@ -54,7 +54,66 @@ you can specify the initial direction, as well as a mode for assigning the contr
 
 ## IA Training
 
-I followed up [this article](https://www.intel.ai/demystifying-deep-reinforcement-learning) as well as pytorch tutorials to implement the Deep Q-learning algorithm.
+I went through [this article](https://www.intel.ai/demystifying-deep-reinforcement-learning) as well as pytorch tutorials to implement the Deep Q-learning algorithm.
+
+![Qlearning algorithm](./Pictures/Qlearning.PNG)
+
+To start the training, run the *trainAI.py* script.
+
+Each parameter of the Q learning algorithm (Exploration epsilon factor, memory capacity, length of games cycle...) can be tweaked in the script.
+
+In order to accelerate the training, an experience memory has been added: we make our AI play several games before analyzing them. The history of each game is then decomposed and saved as Transitions.
+
+We pass as an input of our CNN the game map converted to an array: 0 for empty space, -1 for a wall, 10 for the player head and -10 for the enemy's head.
+
+To see actually see the training in the game, you can choose to pass a *Window* for the game loop.
+
+```
+# Run the game
+window = Window(game, 40)
+game.main_loop(window)
+#game.main_loop() without window for faster training with no visual
+```
+
+### Selecting the AI you want to train
+
+I created two folders for the different IAs I trained.
+Precise for the `folderName` variable the folder name of the IA yout want to train.
+
+```
+# General parameters
+folderName = 'survivor'
+```
+
+The weights for your IA's CNN will then be saved in an **ia.bak** file.
+
+### Tweaking the reward policy
+
+You can edit the IA reward policy directly in the *train.py* script.
+Here is an example for the Aisurvivor reward policy:
+
+```
+# Compute the reward for each player
+reward_p1 = -1
+reward_p2 = -1
+if historyStep +1 == len(game.history)-1:
+    if game.winner is None:
+        null_games += 1
+        reward_p1 = 0
+        reward_p2 = 0
+    elif game.winner == 1:
+        reward_p1 += 100
+        reward_p2 = 0
+        p1_victories +=1
+    else:
+        reward_p1 = -25
+        reward_p2 = 0
+        p2_victories += 1
+    terminal = True
+
+reward_p1 = torch.from_numpy(np.array([reward_p1], dtype=np.float32)).unsqueeze(0)
+reward_p2 = torch.from_numpy(np.array([reward_p2], dtype=np.float32)).unsqueeze(0)
+```
 
 ## Bonus video
 
