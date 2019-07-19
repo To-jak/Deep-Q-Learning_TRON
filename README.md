@@ -1,6 +1,14 @@
 # Deep reinforcment Q-Learning for TRON
 
-Using deep reinforcement learning to train an AI to play TRON.
+**Using deep reinforcement learning to train an AI to play TRON!**
+
+*You can see the result below:*
+
+![Project demo](./Pictures/Tron.gif)
+
+*Here are two AIs playing against each other: this is after a 300 000 games training for the AIsurvivor.*
+
+*With a basic reward policy for the q-learning algorithm they still make a lot of mistakes, but we start to see some strategy appears: there is a game where the red player does a bad start by going down in a dead end... Realizing that, he tries to go up but the blue player chooses to block him afterwards!*
 
 ## Required python librairies
 
@@ -12,6 +20,8 @@ To run this project, you need the following python librairies:
 ## Play the game
 
 To play one game, run the *play.py* script.
+
+![Tron title screen](./Pictures/TitleScreen.png)
 
 ### Players configuration
 
