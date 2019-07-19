@@ -94,25 +94,22 @@ Here is an example for the Aisurvivor reward policy:
 
 ```
 # Compute the reward for each player
-reward_p1 = -1
-reward_p2 = -1
+reward_p1 = +1
+reward_p2 = +1
 if historyStep +1 == len(game.history)-1:
     if game.winner is None:
         null_games += 1
         reward_p1 = 0
         reward_p2 = 0
     elif game.winner == 1:
-        reward_p1 += 100
-        reward_p2 = 0
+        reward_p1 = 100
+        reward_p2 = -25
         p1_victories +=1
     else:
         reward_p1 = -25
-        reward_p2 = 0
+        reward_p2 = 100
         p2_victories += 1
     terminal = True
-
-reward_p1 = torch.from_numpy(np.array([reward_p1], dtype=np.float32)).unsqueeze(0)
-reward_p2 = torch.from_numpy(np.array([reward_p2], dtype=np.float32)).unsqueeze(0)
 ```
 
 ## Bonus video
